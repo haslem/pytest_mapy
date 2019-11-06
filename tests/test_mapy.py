@@ -6,7 +6,7 @@ from selenium.webdriver import Chrome
 from pages.first import FirstPage
 from pages.search_page import SearchPage
 
-
+from selenium.webdriver.common.by import By
 
 @pytest.fixture(scope='session')
 def config():
@@ -42,5 +42,20 @@ def test_mapy_search(browser):
 
 	search_result = SearchPage(browser)
 	assert search_result.search_result() == 'Dresden'
+
+
+def test_mapy_change(browser):
+	change = FirstPage(browser)
+	change.load()
+
+
+	change.change_map_historic()
+
+
+	#open change map menu and ckeck if historic is active
+	change.change_map()
+	assert browser.find_element(By.CSS_SELECTOR, "li[class='19stoleti active']")
+
+
 	
 
